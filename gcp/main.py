@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 import tarfile
 import os
+from flask import Flask, request, jsonify
 
 model = None
 class_names = ["daisy", "dandelion", "roses", "sunflowers", "tulips"]
@@ -12,6 +13,8 @@ BUCKET_NAME = "flower-classification-isaac"
 MODEL_TARBALL = "models/flowerpredict.tar.gz"
 MODEL_DIR = "/tmp/flowerpredict"
 IMG_HEIGHT, IMG_WIDTH = 180, 180
+
+app = Flask(__name__)
 
 def download_blob(bucket_name, source_blob_name, destination_file_name):
     """Downloads a blob from the bucket."""
@@ -27,6 +30,7 @@ def extract_tarball(tarball_path, extract_path):
         tar.extractall(path=extract_path)
     print(f"Extracted {tarball_path} to {extract_path}.")
 
+@app.route('/predict', methods=['POST'])
 def predict(request):
     global model
     if model is None:
@@ -35,22 +39,37 @@ def predict(request):
         extract_tarball(tarball_path, "/tmp")
         model = tf.keras.models.load_model(MODEL_DIR)
 
-    image = request.files["file"]
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
 
-    # Load and preprocess the image
-    img = Image.open(image).convert("RGB").resize((IMG_HEIGHT, IMG_WIDTH))
-    img_array = np.array(img)
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    image = Image.open(file).convert("RGB").resize((IMG_HEIGHT, IMG_WIDTH))
+    img_array = np.array(image)
     img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
     predictions = model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
-    print("Predictions:", predictions)
-    print("Softmax score:", score)
-
     predicted_class = class_names[np.argmax(score)]
     confidence = round(100 * np.max(score), 2)
 
-    return {"class": predicted_class, "confidence": confidence}
+    response = jsonify({
+        "class": predicted_class,
+        "confidence": confidence
+    })
+
+    # Add CORS headers
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add("Access-Control-Allow-Methods", "POST")
+
+    return response
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 #sudo ~/google-cloud-sdk/bin/gcloud functions deploy predict --runtime python38 --trigger-http --memory 1GB --project flower-classification-427503
