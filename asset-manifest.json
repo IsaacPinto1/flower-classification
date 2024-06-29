@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/flower-classification/static/css/main.87437965.css",
+    "main.js": "/flower-classification/static/js/main.ad46161f.js",
+    "static/media/field.jpeg": "/flower-classification/static/media/field.325d2bf97d60c5bc86a4.jpeg",
+    "index.html": "/flower-classification/index.html",
+    "main.87437965.css.map": "/flower-classification/static/css/main.87437965.css.map",
+    "main.ad46161f.js.map": "/flower-classification/static/js/main.ad46161f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.87437965.css",
+    "static/js/main.ad46161f.js"
+  ]
+}
