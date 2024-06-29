@@ -1,0 +1,87 @@
+/* App.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Fallback background color */
+    color: #333; /* Dark text color */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+  }
+  
+  .app-container {
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+    z-index: 1; /* Ensure content is above the background */
+  }
+  
+  .preview-image {
+    width: 300px;
+    margin-top: 20px;
+  }
+  
+  .file-name {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  /* Styled file input */
+  .upload-label {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #63ddff; /* Highlight color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .upload-label:hover {
+    background-color: #5cbbe3; /* Darker highlight color on hover */
+  }
+  
+  .upload-input {
+    display: none; /* Hide the actual file input */
+  }
+  
+  .submit-button {
+    margin-top: 20px;
+    background-color: #63ddff; /* Highlight color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .loading-text {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #63ddff; /* Highlight color */
+  }
+  
+  .prediction {
+    margin-top: 20px;
+  }
+  
+  /* Background image */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./field.jpeg'); /* Path to your image */
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px); /* Adjust the blur amount as needed */
+    opacity: 0.8; /* 80% opacity */
+    z-index: -1; /* Behind all content */
+  }
+  
