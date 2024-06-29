@@ -71,5 +71,5 @@ def predict(request):
 if __name__ == '__main__':
     app.run(debug=True)
 
-
+# Function to deploy:
 #sudo ~/google-cloud-sdk/bin/gcloud functions deploy predict --runtime python38 --trigger-http --memory 1GB --project flower-classification-427503
