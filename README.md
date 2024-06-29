@@ -44,9 +44,6 @@ The website should now be running locally on your machine.
 2. **Model Upload:**
    - Create a bucket in Google Cloud Storage and upload your tarball (`flowerpredict.tar.gz`) to `/models/`.
    - Note the bucket name used and the path to the model
-     - Bucket Name: "flower-classification-isaac"
-     - Model Tarball Path: "models/flowerpredict.tar.gz"
-     - Model Directory: "/tmp/flowerpredict"
 
 3. **Deploying Google Cloud Function:**
    - Update the constants in your `main.py` file:
